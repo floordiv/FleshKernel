@@ -1,3 +1,7 @@
+import settings
+import text
+
+
 class current:
     def time(self):
         import datetime
@@ -17,17 +21,18 @@ class current:
 def sfcall(func, *args):    # safe function call
     try:
         exec(f'{func}{args})')
-    except IndexError:
-        return 'index-error'
-    except FileNotFoundError:
-        return 'file-not-found'
-    except SyntaxError:
-        return 'bad-syntax'
-    except KeyboardInterrupt:
-        return 'aborted'
-    except Exception as running_function_exception:
-        return str(running_function_exception)
+    except Exception as running_func_exception:
+        return str(type(running_func_exception))
 
 
 def broadcast(text_type, text, fg_color='white', bg_color='black'):
-    pass
+    if settings.broadcast.allow:
+        curr_time = current.time(0) if settings.broadcast.show_time else None
+        curr_date = current.time(0) if settings.broadcast.show_date else None
+        text_type = text_type if settings.broadcast.show_type else None
+        if text_type in settings.broadcast.types:
+            line = f'[{text.output(str(text_type).upper(), fg_color=settings.broadcast.types[str(text_type).lower()][0], bg_color=settings.broadcast.types[str(text_type).lower()][1], end="")}] [{curr_date} {curr_time}]' \
+                f' {text}'
+            print(line)
+        else:
+            print(f'[{text.output(text_type.upper(), fg_color=fg_color, bg_color=bg_color, end="")}] [{curr_date} {curr_time}] {text}')

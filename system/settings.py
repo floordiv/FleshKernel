@@ -3,17 +3,18 @@ class global_settings:
 
 
 class log:
-    files = {'error':       ['../log/errors'],
-             'err':         ['../log/logins'],
-             'bad_auth':    ['../log/bad_logins', '../log/logins'],
-             'good_auth':   ['../log/good_logins', '../log/logins'],
-             'warning':     ['../log/global'],
-             'info':        ['../log/global'],
-             'broadcast':   ['../log/output'],
-             'parser':      ['../log/parse_hist'],
-             'memory':      ['../log/memory', '../log/global'],
-             'kernel':      ['../log/global', '../log/kernel_log'],
-             'fatal':       ['../log/global', '../log/kernel_log']
+    files = {
+         'error':       ['../log/errors'],
+         'err':         ['../log/logins'],
+         'bad_auth':    ['../log/bad_logins', '../log/logins'],
+         'good_auth':   ['../log/good_logins', '../log/logins'],
+         'warning':     ['../log/global'],
+         'info':        ['../log/global'],
+         'broadcast':   ['../log/broadcast_hist'],
+         'parser':      ['../log/parse_hist'],
+         'memory':      ['../log/memory', '../log/global'],
+         'kernel':      ['../log/global', '../log/kernel_log'],
+         'fatal':       ['../log/global', '../log/kernel_log']
              }
 
     show_type = True
@@ -24,12 +25,32 @@ class log:
 
 
 class broadcast:
-    color_output = True
+    types = {
+        'error': ['white', 'red'],
+        'fatal': ['white', 'red'],
+        'warning': ['white', 'yellow'],
+        'info': ['white', 'black'],
+        'success': ['white', 'green'],
+        'none': ['blue', 'black']
+    }
+
+    enable_for = ['all']
+
+    colors = True
     autolog = False
+    logging = True
     allow = True
     show_type = True
     show_time = True
-    show_date = False
+    show_date = True
+
+
+class co_core:
+    allow_broadcast = False
+    allow_kernel_checking = True    # if value is False, it can proof your security
+
+    allow_threads = True
+    max_threads = 10
 
 
 class memory:
