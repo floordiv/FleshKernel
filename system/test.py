@@ -15,6 +15,7 @@ def second_thread(a):
 
 
 class third:
+
     def third_thread(self):
         print('I\'m third thread...')
         sleep(1.5)

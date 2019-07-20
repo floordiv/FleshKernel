@@ -16,4 +16,22 @@ also the problem is to handle prints - but this is more much easier. I should fo
 """
 
 
+class process:
+    def __init__(self, name, file):
+        self.name = name
+        self.file = file
+
+    def new(self, name, file):
+        pass
+
+    def kill(self, name):
+        pass
+
+    def info(self, name):
+        pass
+
+    def all(self):
+        pass
+
+
 
