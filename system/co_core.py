@@ -16,6 +16,13 @@ also the problem is to handle prints - but this is more much easier. I should fo
 """
 
 
+class config:
+    class modules:
+        check = True
+        list_to_check = []
+    security = True
+
+
 class process:
     def __init__(self, name, file):
         self.name = name
@@ -25,6 +32,9 @@ class process:
         pass
 
     def kill(self, name):
+        pass
+
+    def lock(self, name):
         pass
 
     def info(self, name):
