@@ -1,1 +1,3 @@
 type = dict
+valueType: list | ignore = handler.py
+valueType: extension | ext_ignore = *
