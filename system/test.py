@@ -34,9 +34,23 @@
 # thread2.join()
 # thread3.join()
 
-import random
+# import random
 
 
-for element in range(int(input('Len of the password: '))):
-    print(random.choice('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
+# for element in range(int(input('Len of the password: '))):
+#     print(random.choice('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
+import os
+
+folder = []
+
+for element in os.walk('/home/floordiv/py/flesh_kernel/system'):
+    folder.append(element)
+
+print(folder)
+
+print('-' * 50)
+
+for address, dirs, files in folder:
+    for file in files:
+        print(address+'/'+file)
 

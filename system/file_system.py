@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 class file:
@@ -6,7 +7,7 @@ class file:
         self.path = path
 
     def edit(self, path, data):
-        if file.is_file(self, path):
+        if file.isfile(self, path):
             path = path[1:] if path.startswith('/') else path
             with open(f'../{path}', 'r') as file_for_edit:
                 lines = file_for_edit.readlines()
@@ -22,13 +23,13 @@ class file:
         if mode not in modes:
             raise Exception('bad file write mode')
         path = path[1:] if path.startswith('/') else path
-        if file.is_file(self, path):
+        if file.isfile(self, path):
             with open(f'../{path}', mode) as user_file:
                 user_file.write(text)
         return 'success'
 
     def read(self, path):
-        if file.is_file(self, path):
+        if file.isfile(self, path):
             path = path[1:] if path.startswith('/') else path
             return open(f'../{path}', 'r').read()
         return FileNotFoundError('bad path to file!')
@@ -44,7 +45,7 @@ class file:
         path = path[1:] if path.startswith('/') else path
         return os.path.exists(f'../{path}')
 
-    def is_file(self, path):
+    def isfile(self, path):
         path = path[1:] if path.startswith('/') else path
         return os.path.isfile(f'../{path}')
 
@@ -62,6 +63,20 @@ class direction:
             return 'success'
         except Exception as creating_direction_exception:
             return str(creating_direction_exception)
+        
+    def content(self, path):
+        path = '../' + path[1:] if path.startswith('/') else path
+        return os.listdir(path)
+
+    def recursion_content(self, path):
+        path = '../' + path[1:] if path.startswith('/') else path
+
+        content = []
+
+        for element in os.walk(path):
+            content.append(element)
+
+        return content
 
     def remove(self, path):
         path = '../' + path[1:] if path.startswith('/') else path
@@ -74,16 +89,26 @@ class direction:
 
     def move(self, path, new_path):
         path = '../' + path[1:] if path.startswith('/') else path
+        new_path = '../' + path[1:] if path.startswith('/') else path
 
+        try:
+            shutil.move(path, new_path)
+        except Exception as moving_directory_exception:
+            return str(moving_directory_exception)
+        
 
     def rename(self, path, new_dir_name):
         path = '../' + path[1:] if path.startswith('/') else path
         new_dir_name = f'../{"/".join(path.split("/")[1:-1])}/{new_dir_name}'
         if direction.exists(self, path):
-            if not file.is_file(0, path):
+            if not file.isfile(0, path):
                 os.rename(path, new_dir_name)
                 return 'success'
         return NotADirectoryError('invalid path!')
+
+    def isdir(self, path):
+        path = '../' + path[1:] if path.startswith('/') else path
+        return os.path.isdir(path)
 
     def exists(self, path):
         path = '../' + path[1:] if path.startswith('/') else path
