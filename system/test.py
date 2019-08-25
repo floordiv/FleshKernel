@@ -39,18 +39,34 @@
 
 # for element in range(int(input('Len of the password: '))):
 #     print(random.choice('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-import os
 
-folder = []
+# import os
 
-for element in os.walk('/home/floordiv/py/flesh_kernel/system'):
-    folder.append(element)
+# folder = []
 
-print(folder)
+# for element in os.walk('/home/floordiv/py/flesh_kernel/system'):
+#     folder.append(element)
 
-print('-' * 50)
+# print(folder)
 
-for address, dirs, files in folder:
-    for file in files:
-        print(address+'/'+file)
+# print('-' * 50)
 
+# for address, dirs, files in folder:
+#     for file in files:
+#          print(address+'/'+file)
+
+import config
+print(config.new('app', {'deny_functions': {'list_of_functions': 'print input open'}, 'deny_modules': {'list_of_modules': 'os sys builtins'}}))
+
+# index = 0
+# percent_index = 0
+# number_length = 10
+# symbols = []
+
+# for element in range(10000000000):
+#     symbols.append(f'{"0" * (number_length - len(str(index)))}{index}')
+#     current_success_percent = int(100 / 10000000000 * index)
+#     if current_success_percent == percent_index + 2:
+#             percent_index += 2
+#             print('#', end='')
+#     index += 1

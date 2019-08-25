@@ -1,0 +1,6 @@
+[deny_functions]
+list_of_functions = print input open
+
+[deny_modules]
+list_of_modules = os sys builtins
+

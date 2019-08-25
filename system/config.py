@@ -27,8 +27,11 @@ def new(name, options, return_info=False):
             for variable in options[element]:   # each variable in variables of section
                 config.set(element, variable, options[element][variable])
 
-        with open(f'../config/{name}', 'w') as config_file:
+        print(os.getcwd())
+
+        with open(f'flesh_kernel/config/{name}', 'w') as config_file:
             config.write(config_file)
+        return 'success'
     except Exception as writing_new_config_exception:
         return str(writing_new_config_exception)
 
