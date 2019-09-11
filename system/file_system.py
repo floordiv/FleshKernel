@@ -1,6 +1,8 @@
 import os
 import shutil
 
+a = 'test'
+
 
 class file:
     def __init__(self, path):
@@ -54,6 +56,7 @@ class file:
     def isfile(path):
         path = path[1:] if path.startswith('/') else path
         return os.path.isfile(f'../{path}')
+
 
 class direction:
     def __init__(self, path):

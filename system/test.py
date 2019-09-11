@@ -1,72 +1,19 @@
-# import threading
-# from time import sleep
-#
-#
-# def first_thread():
-#     while True:
-#         print('I am first thread!')
-#         sleep(2)
-#
-#
-# def second_thread(a):
-#     while True:
-#         print(f'I am second thread: {a}')
-#         sleep(2)
-#
-#
-# class third:
-#
-#     def third_thread(self):
-#         print('I\'m third thread...')
-#         sleep(1.5)
-#
-#     third_thread(0)
-#
-#
-# thread1 = threading.Thread(target=first_thread)
-# thread2 = threading.Thread(target=second_thread, args=['rgrg'])
-# thread3 = threading.Thread(target=third)
-#
-# thread1.start()
-# thread2.start()
-# thread3.start()
-# thread1.join()
-# thread2.join()
-# thread3.join()
+# import config
+# print(config.new('app', {'deny_functions': {'list_of_functions': 'print input open'}, 'deny_modules': {'list_of_modules': 'os sys builtins'}}))
 
-# import random
+import importlib.util
+module_spec = importlib.util.find_spec('test2')
+module = importlib.util.module_from_spec(
+    importlib.util.find_spec('test2'))
 
 
-# for element in range(int(input('Len of the password: '))):
-#     print(random.choice('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
+def printer():
+    print('I\'m here!')
 
-# import os
 
-# folder = []
-
-# for element in os.walk('/home/floordiv/py/flesh_kernel/system'):
-#     folder.append(element)
-
-# print(folder)
-
-# print('-' * 50)
-
-# for address, dirs, files in folder:
-#     for file in files:
-#          print(address+'/'+file)
-
-import config
-print(config.new('app', {'deny_functions': {'list_of_functions': 'print input open'}, 'deny_modules': {'list_of_modules': 'os sys builtins'}}))
-
-# index = 0
-# percent_index = 0
-# number_length = 10
-# symbols = []
-
-# for element in range(10000000000):
-#     symbols.append(f'{"0" * (number_length - len(str(index)))}{index}')
-#     current_success_percent = int(100 / 10000000000 * index)
-#     if current_success_percent == percent_index + 2:
-#             percent_index += 2
-#             print('#', end='')
-#     index += 1
+module.__dict__['printer'] = printer
+module.__dict__['lol'] = 'nonono test'
+print(vars(module))
+# print(module.__dict__)
+importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(module)

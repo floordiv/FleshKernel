@@ -1,5 +1,33 @@
 import log
 import settings
+import collections
+
+
+class const(object):
+
+    def __setattr__(self, name, value, signature=None):
+        if name in self.__dict__:
+            if signature is None:
+                raise TypeError('Constant can not be changed')
+
+        if not isinstance(value, collections.Hashable):
+            if isinstance(value, list):
+                value = tuple(value)
+            elif isinstance(value, set):
+                value = frozenset(value)
+            elif isinstance(value, dict):
+                raise TypeError('Dict can\'t be used as constant!')
+            else:
+                raise TypeError('Mutable or custom type can\'t be used as constant!')
+        self.__dict__[name] = value
+        return 'constant-successfully-added'
+
+    def __delattr__(self, name):
+        # Deny against deleting a declared constant
+        log.write()
+        if name in self.__dict__:
+            raise MemoryError('Constant can\'t be deleted!')
+        raise NameError("Variable not found!" % name)
 
 
 class vars:
