@@ -2,6 +2,17 @@ import configparser
 import os
 
 
+class var:
+    types = {
+        'dict': dict,
+        'str': str,
+        'list': list,
+        'tuple': tuple,
+        'int': int,
+        'float': float
+    }
+
+
 """
 options = {'section1': {'var': 'test'}}
 """
@@ -27,13 +38,15 @@ def new(name, options, return_info=False):
             for variable in options[element]:   # each variable in variables of section
                 config.set(element, variable, options[element][variable])
 
-        print(os.getcwd())
-
-        with open(f'flesh_kernel/config/{name}', 'w') as config_file:
+        with open(f'../config/{name}', 'w') as config_file:
             config.write(config_file)
         return 'success'
     except Exception as writing_new_config_exception:
         return str(writing_new_config_exception)
+
+
+def exists(name):
+    return os.path.isfile(f'../config/{name}')
 
 
 def edit(name, new_options):
@@ -52,23 +65,56 @@ def edit(name, new_options):
         return str(saving_new_options_exception)
 
 
-def get_var(name, section, var):
-    try:
-        config = configparser.ConfigParser()
-        config.read(f'../config/{name}')
-        data_to_return = []
-        if section == '*':
-            for sector in config.sections():
+def var_to_var_with_type(value, mode='from_text'):
+    if mode == 'from_text':
+        if not value.strip().startswith('type:'):
+            return False
+        value = value.strip().split('|')
+        value_type = value[0].split(':')[1]
+        value = value[1]
+        if value_type not in var.types:
+            return False
+        if value_type == 'dict':
+            values = value.split('.')
+            dict_to_return = {}
+            for element in values:
+                values_in_current_element = element.split(':')[1].split(',')
+                dict_to_return[element.split(':')[0]] = values_in_current_element
+
+            return dict_to_return
+        elif value_type in ['int', 'float']:
+            list_with_number_to_return = []
+            for element in value.split(','):
                 try:
-                    data_to_return.append(config.get(sector, var))
-                except:
+                    list_with_number_to_return.append(var.types[element])
+                except TypeError:
                     pass
-            return data_to_return
-        elif var == '*':
-            return config.items(section)
-        return config.get(section, var)
-    except Exception as reading_data_from_config_exception:
-        return str(reading_data_from_config_exception)
+
+            return list_with_number_to_return
+        else:
+            return var.types[value.split(',')]
+    elif mode == 'from_type':
+        if type(value) == dict:
+            pass
+
+
+def get_var(name, section, variable):
+    config = configparser.ConfigParser()
+    config.read(f'../config/{name}')
+    data_to_return = []
+    if section == '*':
+        for sector in config.sections():
+            try:
+                data_to_return.append(config.get(sector, variable))
+            except:
+                pass
+        return data_to_return
+    elif variable == '*':
+        return config.items(section)
+
+    value = config.get(section, variable)
+    value_has_type = var_to_var_with_type(value)
+    return value_has_type if value_has_type is not False else value
 
 
 def remove(name, options, remove_config=False):
@@ -91,18 +137,4 @@ def remove(name, options, remove_config=False):
         return 'options-removed-successfully'
     except Exception as removing_config_exception:
         return str(removing_config_exception)
-
-
-# new('d', {'sector1': {'var1': 'test1', 'var2': 'test2'}, 'sector2': {'var1': 'test1', 'var2': 'test2'}})
-# remove('d', {'sector1': '*', 'sector2': ['var1']})
-# print(get_var('d', 'sector1', 'var1'))
-# print(get_var('d', 'sector1', '*'))
-# print(get_var('d', 'sector2', '*'))
-# edit('d', {'sector1': {'var1': 'true_test', 'var2': 'fuck this shit'}})
-# print(get_var('d', 'sector1', '*'))
-# print(edit('d', {'sector1': {'var50': 'rgtg'}}))
-# print(get_var('d', 'sector1', '*'))
-
-
-
 

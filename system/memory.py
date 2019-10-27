@@ -1,5 +1,4 @@
 import log
-import settings
 import collections
 
 
@@ -24,7 +23,6 @@ class const(object):
 
     def __delattr__(self, name):
         # Deny against deleting a declared constant
-        log.write()
         if name in self.__dict__:
             raise MemoryError('Constant can\'t be deleted!')
         raise NameError("Variable not found!" % name)
@@ -65,3 +63,10 @@ def read(key, name='global'):
 
 def remove(key, name='global'):
     vars.remove(0, key, name=name)
+
+
+const.my_tuple = (('a', 'hello'), ('world', 'me'))
+# print(const.my_tuple)
+a = const.my_tuple
+print(type(a))
+print('hello')
