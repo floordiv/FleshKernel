@@ -244,37 +244,36 @@ def __get_functions_calls(splitted_line):
     functions = {}
     temp = []
     function_arguments = False
-    for element in splitted_line:
+    for index, each in enumerate(splitted_line):
         # last_character = splitted_line[index - 1] in characters
-        for index, each in enumerate(element):
-            last_character = True
-            print(index, each)
-            if '(' in each and not function_arguments and each[index] == ')' and last_character:
-                func_name = temp
-                functions[func_name] = None
-                temp = []
-            if ')' not in each and function_arguments and last_character:
-                temp.append(each)
-            if '(' in each and not function_arguments and last_character:
-                function_arguments = True
-                temp = [each]
-            if ')' in each and function_arguments and last_character:
-                temp.append(each)
-                func_name = temp[0].split('(')[0]
-                if func_name not in functions:
-                    functions[func_name] = []
-                for element in temp:
-                    if element.endswith(')'): element = element[:-1]
-                    if '(' in element: element = element.split('(')[1]
-                    functions[func_name].append(element)
-                function_arguments = False
+        if '(' in each and not function_arguments and splitted_line[index + 1] == ')':
+            func_name = temp
+            functions[func_name] = None
+            temp = []
+        if ')' not in each and function_arguments:
+            temp.append(each)
+        if '(' in each and not function_arguments:
+            function_arguments = True
+            temp = [each]
+        if ')' in each and function_arguments:
+            temp.append(each)
+            func_name = temp[0].split('(')[0]
+            if func_name not in functions:
+                functions[func_name] = []
+            for element in temp:
+                if element.endswith(')'): element = element[:-1]
+                if '(' in element: element = element.split('(')[1]
+                functions[func_name].append(element)
+            function_arguments = False
     for each in functions:
-        if functions[each] == ['', '']:
-            functions[each] = None
+        if functions[each][0] == functions[each][1]:
+            del functions[each][1]
+        if functions[each][0] == '':
+            functions[each][0] = None
     return functions
 
 
-print(__get_functions_calls(__variables_from_line('world, var = hello, get_lines(kwarg=True), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"')[1]))
+print(__get_functions_calls(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"')[1]))
 # print(__get_functions_calls('hello, world(hi, world)'.split(',')))
 # print(__variables_from_line('var = test, "hello, worlder"'))
 
