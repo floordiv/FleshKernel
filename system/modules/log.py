@@ -1,5 +1,5 @@
 import os
-import config
+import modules.config as config
 import func
 import memory
 

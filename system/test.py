@@ -1,21 +1,14 @@
-import config
-# # print(config.new('app', {'deny_functions': {'list_of_functions': 'print input open'}, 'deny_modules': {'list_of_modules': 'os sys builtins'}}))
-#
-# import importlib.util
-# module_spec = importlib.util.find_spec('test2')
-# module = importlib.util.module_from_spec(
-#     importlib.util.find_spec('test2'))
-#
-#
-# def printer():
-#     print('I\'m here!')
-#
-#
-# module.__dict__['printer'] = printer
-# module.__dict__['lol'] = 'nonono test'
-# print(vars(module))
-# # print(module.__dict__)
-# importlib.util.module_from_spec(module_spec)
-# module_spec.loader.exec_module(module)
-# config.new('modules', {''})
-config.validate
+import modules.config as config
+config.new('screen_driver', {'keyboard': {'input': 'keyboard.input', 'output': 'keyboard.output'}, 'screen': {'resolution': '55x200'}})
+
+
+# import os
+# os.system('clear')
+# resolution = '55x200'
+# y = int(resolution.split('x')[0]) - 2
+# x = int(resolution.split('x')[1])
+# print('-' * x)
+# for index in range(y):
+#     print(' ' * (x - 2), '|')
+# print('-' * x)
+

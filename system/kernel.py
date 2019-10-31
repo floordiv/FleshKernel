@@ -1,12 +1,13 @@
 import os
+import sys
 import app
-import config
-import encryption
+import modules.config as config
+import modules.encryption as encryption
 import memory
 import func
-import file_system
-import line_parser
-import log
+import modules.file_system as fs
+import modules.line_parser as parser
+import modules.log as log
 import user
 import socket
 import errno
@@ -18,7 +19,7 @@ import errno
 class application:
 
     try:
-        default_modules_sockets = dict(config.get('kernel', 'default_socket_values', '*'))
+        default_modules_sockets = dict(config.get_var('kernel', 'default_socket_values', '*'))
         print(f'[INFO] Successfully ')
     except Exception as getting_kernel_modules_sockets_values_exception:
         print(f'[ERROR] Could not find default values for kernel modules sockets ({getting_kernel_modules_sockets_values_exception}). '
@@ -85,6 +86,10 @@ def init():
     print('[INFO] Sockets has been initialized successfully. Initializing modules...')
     for element in modules:
         pass
+
+    # init modules paths
+    for each in ['..user/programs', 'modules', 'drivers']:
+        sys.path.insert(0, each)
 
 
 init()

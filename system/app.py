@@ -1,4 +1,4 @@
-import config
+import modules.config as config
 import importlib.util
 
 
@@ -126,13 +126,13 @@ def __replace_braces(text, toreplace='()[]{}'):
             is_string = not is_string
 
             functions.append(index)
-        elif char in string_indent and not is_string:
+        if char in string_indent and not is_string:
             is_string = not is_string
             current_ident = char
-        elif char == current_ident and is_string:
+        if char == current_ident and is_string:
             is_string = None
             current_ident = None
-        elif char in toreplace and not is_string:
+        if char in toreplace and not is_string:
             lst[index] = ''
     return ''.join(lst), functions
 
@@ -273,6 +273,10 @@ def __get_functions_calls(splitted_line):
     return functions
 
 
+print(__replace_braces('world, var = (hello), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"')[0])
+print('\n\n')
+print(__variables_from_line('world, var = (hello), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"'))
+print(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"'))
 print(__get_functions_calls(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"')[1]))
 # print(__get_functions_calls('hello, world(hi, world)'.split(',')))
 # print(__variables_from_line('var = test, "hello, worlder"'))

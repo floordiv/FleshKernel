@@ -1,0 +1,7 @@
+[keyboard]
+input = keyboard.input
+output = keyboard.output
+
+[screen]
+resolution = 55x200
+
