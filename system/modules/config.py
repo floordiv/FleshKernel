@@ -2,6 +2,11 @@ import configparser
 import os
 
 
+"""
+NOT IN USE - NOW USING JSON
+"""
+
+
 class var:
     types = {
         'dict': dict,

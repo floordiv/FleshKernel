@@ -1,7 +1,6 @@
 import os
 import shutil
-
-a = 'test'
+import errors
 
 
 class file:
@@ -9,8 +8,8 @@ class file:
         self.path = path
 
     @staticmethod
-    def edit(path, data):
-        if file.isfile(path):
+    def edit(path, data, from_app):
+        if file.isfile(path, from_app):
             path = path[1:] if path.startswith('/') else path
             with open(f'../{path}', 'r') as file_for_edit:
                 lines = file_for_edit.readlines()
@@ -20,27 +19,29 @@ class file:
                 lines[line] = data[line]
             with open(f'../{path}', 'w') as final_file:
                 final_file.write('\n'.join(lines))
+        else:
+            raise FileNotFoundError('path is wrong or file does not exists')
 
     @staticmethod
-    def write(path, text, mode='a'):
+    def write(path, text, from_app, mode='a'):
         modes = ['a', 'w']
         if mode not in modes:
             raise Exception('bad file write mode')
         path = path[1:] if path.startswith('/') else path
-        if file.isfile(path):
+        if file.isfile(path, from_app):
             with open(f'../{path}', mode) as user_file:
                 user_file.write(text)
         return 'success'
 
     @staticmethod
-    def read(path):
-        if file.isfile(path):
+    def read(path, from_app):
+        if file.isfile(path, from_app):
             path = path[1:] if path.startswith('/') else path
             return open(f'../{path}', 'r').read()
-        return FileNotFoundError('bad path to file!')
+        raise FileNotFoundError('path is wrong or file does not exists')
 
     @staticmethod
-    def create(path):
+    def create(path, from_app):
         # if file.is_file(0, path):         I don't need this code anymore, because explored a new file mode, x
         #     raise FileExistsError(f'file exists!')
         path = path[1:] if path.startswith('/') else path
@@ -48,25 +49,25 @@ class file:
         return 'success'
 
     @staticmethod
-    def exists(path):
+    def exists(path, from_app):
         path = path[1:] if path.startswith('/') else path
         return os.path.exists(f'../{path}')
 
     @staticmethod
-    def isfile(path):
+    def isfile(path, from_app):
         path = path[1:] if path.startswith('/') else path
         return os.path.isfile(f'../{path}')
 
 
-class direction:
+class directory:
     def __init__(self, path):
         self.path = path
 
     @staticmethod
-    def create(self, path):
+    def create(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
-        if direction.exists(path):
-            raise IsADirectoryError('path exists!')
+        if directory.exists(path, from_app):
+            raise errors.DirectoryExistsError('given directory is already exists: ', path)
         try:
             os.mkdir(path)
             return 'success'
@@ -74,13 +75,15 @@ class direction:
             return str(creating_direction_exception)
 
     @staticmethod
-    def content(path):
+    def content(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
         return os.listdir(path)
 
     @staticmethod
-    def recursion_content(path):
+    def recursion_content(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
+        if not os.path.exists(path):
+            raise errors.DirectoryDoesntExistsError('directory does not exists: ', path)
 
         content = []
 
@@ -90,19 +93,25 @@ class direction:
         return content
 
     @staticmethod
-    def remove(path):
+    def remove(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
-        if direction.exists(path):
+        if directory.exists(path, from_app):
             try:
                 os.rmdir(path)
                 return 'success'
             except Exception as removing_direction_exception:
                 return str(removing_direction_exception)
+        else:
+            raise errors.DirectoryDoesntExistsError('directory does not exists: ', path)
 
     @staticmethod
-    def move(path, new_path):
+    def move(path, new_path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
-        new_path = '../' + path[1:] if path.startswith('/') else path
+        new_path = '../' + new_path[1:] if new_path.startswith('/') else path
+        if not os.path.exists(path):
+            raise errors.DirectoryDoesntExistsError('old directory does not exists: ', path)
+        if not os.path.exists(new_path):
+            os.mkdir(new_path)
 
         try:
             shutil.move(path, new_path)
@@ -110,21 +119,21 @@ class direction:
             return str(moving_directory_exception)
 
     @staticmethod
-    def rename(path, new_dir_name):
+    def rename(path, new_dir_name, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
         new_dir_name = f'../{"/".join(path.split("/")[1:-1])}/{new_dir_name}'
-        if direction.exists(path):
-            if not file.isfile(path):
+        if directory.exists(path, from_app):
+            if not file.isfile(path, from_app):
                 os.rename(path, new_dir_name)
                 return 'success'
-        return NotADirectoryError('invalid path!')
+        raise errors.DirectoryDoesntExistsError('directory does not exists: ', path)
 
     @staticmethod
-    def isdir(path):
+    def isdir(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
         return os.path.isdir(path)
 
     @staticmethod
-    def exists(path):
+    def exists(path, from_app):
         path = '../' + path[1:] if path.startswith('/') else path
         return os.path.exists(path)
