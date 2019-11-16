@@ -74,12 +74,11 @@ def init():
                     'directory': {
                         'guest': {
                             'list_type': 'whitelist',
-                            'func_list': [''],
-                            'dir_list': ['']    # log
+                            'dir_list': [['/root/log', 'path', 'ro'], ['/root/cfg', 'path'], ['/root/system/modules', 'path'], ['/root/system/app.py', 'file'],
+                                         ['/root/system/func.py', 'file'], ['/root/system/memory.py', 'file'], ['/root/system/user.py', 'file']]
                         },
                         'user': {
                             'list_type': 'whitelist',
-                            'func_list': [''],
                             'dir_list': ['']
                         }
                     }

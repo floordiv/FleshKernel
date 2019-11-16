@@ -1,0 +1,1 @@
+[{"kern_version": "0.0.1", "kern_main": "system/kernel.py", "shells": [["system/shell.py", {"name": "Default proprietary tOS shell", "version": "0.0.1"}]], "auto_choose": false, "auto_shell_start": false, "pre_load_exec": null}]
