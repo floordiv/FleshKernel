@@ -1,0 +1,6 @@
+main:apollo.shell.py
+api:apollo.shell.api
+version:0.0.1
+name:Apollo Shell
+surname:Apollo
+description:Apollo Shell - proprietary shell for flesh kernel, has it's own api, also may be used as constructor
