@@ -30,18 +30,55 @@ def read_config():
         os.abort()
 
 
+def find_inf():
+    files = os.listdir('./system/shell')
+    inf_files = []
+    result = {}
+    print('[BOOT] Looking for *.inf files in /root/system/shell...')
+    for file in files:
+        if file.endswith('.inf'):
+            print(f'[BOOT] *.inf file found: {file.split("."[:-1])}')
+            inf_files.append(file)
+
+    for each in inf_files:
+        print(f'[BOOT] Reading .inf file: {each}')
+        with open(f'./system/shell/{each}.inf', 'r') as content:
+            content = content.read().split('\n')
+        result[each] = {}
+        for element in content:
+            result[each][element.split(':')[0]] = element.split(':')
+        print(f'[BOOT] {each}.inf: variables: {", ".join(list(result[each].values()))}')
+    return result
+
+
+def valid_infs(result, required_vars=('name', 'main')):
+    for var in required_vars:
+        if var not in result:
+            return False
+    return True
+
+
+def valid_inf(infname, infval, required_vars=('name', 'main')):
+    for each in required_vars:
+        if each not in infval:
+            return infname
+    return True
+
+
 def fix_boot_config():
     files = os.listdir('./system')
-    if 'kernel.py' in files and 'shell' in os.listdir('./system'):
+    result = find_inf()
+    if not valid_infs(result):
+        print('[BOOT-FATAL] No valid shell pointers found. Aborting...')
+    if 'kernel.py' in files and len(result) > 0:
         print('[BOOT] Creating new boot config...')
         try:
-            default_values = [{'kern_version': 'UNKNOWN', 'kern_main': 'system/kernel.py', 'filesystem_folders': ['cfg', 'system',
-                                                                                                                  'system/drivers',
-                                                                                                                  'system/modules'],
-                               'filesystem_files': ['system/drivers/keyboard.py', 'system/drivers/screen.py', 'system/modules'],
-                               'shells': [['system/shell.py',
-                                           {'name': 'Default proprietary tOS shell',
-                                            'version': 'UNKNOWN'}]],
+            files = os.listdir('./system')
+
+            default_values = [{'kern_version': 'UNKNOWN', 'kern_main': 'system/kernel.py', 'shells': [['system/shell/apollo_shell.py', {'name':
+                                                                                                                               'Default '
+                                                                                                                               'proprietary tOS shell',
+                                                                                                                           'version': 'UNKNOWN'}]],
                                'auto_choose': False,
                                'auto_shell_start': False, 'pre_load_exec': None}]
             try:
@@ -54,7 +91,7 @@ def fix_boot_config():
             print(f'[BOOT-FATAL] Boot config writing failed: {creating_boot_config_exception}. Aborting...')
             os.abort()
     else:
-        print('[BOOT-FATAL] Kernel or folder "/root/system/shell" not found! Aborting...')
+        print('[BOOT-FATAL] Kernel or shell not found! Aborting...')
         os.abort()
 
 
@@ -75,7 +112,7 @@ boot = check_config()
 if not boot:
     print('[BOOT-FATAL] Boot failed because of invalid boot config. Aborting...')
     os.abort()
-# and now, you can look
+# now you can
 
 settings = read_config()
 print(f'[BOOT-EXEC] Execute code before kernel: {settings["pre_load_exec"] is not None}')
@@ -85,11 +122,6 @@ if settings["pre_load_exec"] is not None:
         eval(f'exec("{settings["pre_load_exec"]}")')
     except Exception as executing_code_exception:
         print(f'[BOOT-EXEC] Code execution failed: {executing_code_exception}')
-
-
-# start filesystem validation
-required_folders = settings['filesystem_folders']
-required_files = settings['filesystem_files']
 
 finish = time.time()
 print(f'[BOOT] Booting completed in: {finish - start} sec')
