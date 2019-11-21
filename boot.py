@@ -1,6 +1,10 @@
 import time
 import os
 import json
+import datetime
+
+start = time.time()
+start_time = datetime.datetime.now()
 
 
 def check_config():
@@ -109,8 +113,7 @@ def fix_boot_config(abort_without_shell=True):
         os.abort()
 
 
-start = time.time()
-print('[BOOT] Start booting at: ', end='')
+print(f'[BOOT] Start booting at: {start_time}')
 
 # does boot config exists
 required_variables = ['kern_version', 'kern_main', 'shells', 'filesystem_folders', 'filesystem_files', 'auto_choose', 'auto_shell_start',
@@ -138,5 +141,6 @@ if settings["pre_load_exec"] is not None:
         print(f'[BOOT-EXEC] Code execution failed: {executing_code_exception}')
 
 finish = time.time()
-print(f'[BOOT] Booting completed in: {finish - start} sec')
+print(f'[BOOT] All main boot functions has ran successfully at: {datetime.datetime.now()}')
+print(f'[BOOT] Booting completed in: {finish - start} sec. Initializing kernel...')
 # run kernel init here
