@@ -3,6 +3,7 @@ import os
 import json
 import datetime
 import importlib
+import importlib.util
 import traceback
 
 start = time.time()
@@ -202,7 +203,10 @@ print(f'[BOOT] Booting completed in: {finish - start} sec. Initializing kernel..
 log(f'Booting completed in: {finish - start} sec. Initializing kernel...')
 # run kernel init here
 try:
-    kernel = importlib.import_module(f'./{".".join(settings["kern_main"].split(".")[:-1])}')
+    # kern_main = ".".join(settings["kern_main"].split(".")[:-1])   # without .py ending
+    kern_main = settings['kern_main']                               # with .py ending
+
+    kernel = importlib.import_module(f'./{kern_main}')
     kernel.init()
 except Exception as initializing_kernel_exception:
     print(f'[BOOT-FATAL] Kernel initializing failed: {initializing_kernel_exception}. More info:\n\n{traceback.format_exc()}')
