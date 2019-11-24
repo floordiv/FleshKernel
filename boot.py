@@ -10,7 +10,7 @@ start_time = datetime.datetime.now()
 
 
 def check_config():
-    result = None
+    result = True
     if os.path.isfile('cfg/boot'):
         try:
             with open('cfg/boot') as boot_conf:
@@ -135,6 +135,9 @@ def fix_boot_config(abort_without_shell=True):
             default_values = [{'kern_version': 'UNKNOWN', 'kern_main': 'system/kernel.py', 'shells': shells, 'auto_choose': False,
                                'pre_load_exec': None}]
             try:
+                root_files = os.listdir('.')
+                if 'cfg' not in root_files:
+                    os.mkdir('cfg')
                 with open('./cfg/boot', 'w') as new_conf:
                     json.dump(default_values, new_conf)
             except Exception as creating_boot_config_exception:
@@ -199,8 +202,8 @@ print(f'[BOOT] Booting completed in: {finish - start} sec. Initializing kernel..
 log(f'Booting completed in: {finish - start} sec. Initializing kernel...')
 # run kernel init here
 try:
-    kernel = importlib.import_module(settings['kern_main'])
+    kernel = importlib.import_module(f'./{settings["kern_main"]}')
     kernel.init()
 except Exception as initializing_kernel_exception:
-    print(f'[BOOT-FATAL] Kernel initializing failed: {initializing_kernel_exception}. More info:\n{traceback.format_exc()}')
+    print(f'[BOOT-FATAL] Kernel initializing failed: {initializing_kernel_exception}. More info:\n\n{traceback.format_exc()}')
     log(f'[FATAL] Kernel initializing failed: {initializing_kernel_exception}. More info:\n{traceback.format_exc()}')

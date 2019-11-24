@@ -67,3 +67,149 @@
 [2019-11-24 17:42:45.965842] Reading .inf file: apollo.shell.inf
 [2019-11-24 17:42:45.965932] apollo.shell.inf: variables: name, main, description
 [2019-11-24 17:42:45.965984] [FATAL] Kernel or shell not found! Aborting...
+[2019-11-24 17:51:28.706927] Booting...
+[2019-11-24 17:51:28.707002] Checking required folders...
+[2019-11-24 17:51:28.707082] [ERROR] Boot config does not exists! Trying to fix it...
+[2019-11-24 17:51:28.707191] Looking for *.inf files in /root/system/shell...
+[2019-11-24 17:51:28.707278] *.inf file found: apollo.shell
+[2019-11-24 17:51:28.707362] Reading .inf file: apollo.shell.inf
+[2019-11-24 17:51:28.707497] apollo.shell.inf: variables: name, main, description
+[2019-11-24 17:51:28.707557] Creating new boot config...
+[2019-11-24 17:51:28.707615] [FATAL] Creating boot config failed: [Errno 2] No such file or directory: './cfg/boot'. Aborting...
+[2019-11-24 17:54:57.015571] Booting...
+[2019-11-24 17:54:57.015665] Checking required folders...
+[2019-11-24 17:54:57.015786] [ERROR] Boot config does not exists! Trying to fix it...
+[2019-11-24 17:54:57.015865] Looking for *.inf files in /root/system/shell...
+[2019-11-24 17:54:57.015917] *.inf file found: apollo.shell
+[2019-11-24 17:54:57.015973] Reading .inf file: apollo.shell.inf
+[2019-11-24 17:54:57.016101] apollo.shell.inf: variables: name, main, description
+[2019-11-24 17:54:57.016154] Creating new boot config...
+[2019-11-24 17:54:57.016354] New boot config created successfully
+[2019-11-24 17:54:57.016467] [FATAL] Boot failed because of invalid boot config. Aborting...
+[2019-11-24 18:06:15.082977] Booting...
+[2019-11-24 18:06:15.083086] Checking required folders...
+[2019-11-24 18:06:15.083295] [ERROR] Boot config does not exists! Trying to fix it...
+[2019-11-24 18:06:15.083392] Looking for *.inf files in /root/system/shell...
+[2019-11-24 18:06:15.083480] *.inf file found: apollo.shell
+[2019-11-24 18:06:15.083562] Reading .inf file: apollo.shell.inf
+[2019-11-24 18:06:15.083679] apollo.shell.inf: variables: name, main, description
+[2019-11-24 18:06:15.083746] Creating new boot config...
+[2019-11-24 18:06:15.084012] New boot config created successfully
+[2019-11-24 18:06:15.084144] [FATAL] Boot failed because of invalid boot config. Aborting...
+[2019-11-24 18:08:05.670038] Booting...
+[2019-11-24 18:08:05.670140] Checking required folders...
+[2019-11-24 18:08:05.670393] [EXEC] Execute code before kernel: False
+[2019-11-24 18:08:05.670476] All main boot functions has ran successfully at: 2019-11-24 18:08:05.670432
+[2019-11-24 18:08:05.670557] Booting completed in: 0.0004885196685791016 sec. Initializing kernel...
+[2019-11-24 18:08:05.671477] [FATAL] Kernel initializing failed: No module named 'system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(settings['kern_main'])
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 941, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'system/kernel'
+
+[2019-11-24 18:15:40.961167] Booting...
+[2019-11-24 18:15:40.961272] Checking required folders...
+[2019-11-24 18:15:40.961498] [EXEC] Execute code before kernel: False
+[2019-11-24 18:15:40.961601] All main boot functions has ran successfully at: 2019-11-24 18:15:40.961545
+[2019-11-24 18:15:40.961710] Booting completed in: 0.0004763603210449219 sec. Initializing kernel...
+[2019-11-24 18:15:40.962069] [FATAL] Kernel initializing failed: the 'package' argument is required to perform a relative import for './system/kernel.py'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'./{settings["kern_main"]}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for './system/kernel.py'
+
+[2019-11-24 18:22:02.768633] Booting...
+[2019-11-24 18:22:02.768776] Checking required folders...
+[2019-11-24 18:22:02.769164] [EXEC] Execute code before kernel: False
+[2019-11-24 18:22:02.769227] All main boot functions has ran successfully at: 2019-11-24 18:22:02.769194
+[2019-11-24 18:22:02.769320] Booting completed in: 0.0007395744323730469 sec. Initializing kernel...
+[2019-11-24 18:22:02.769691] [FATAL] Kernel initializing failed: the 'package' argument is required to perform a relative import for './system/kernel.py'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'./{settings["kern_main"]}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for './system/kernel.py'
+
+[2019-11-24 18:31:14.695670] Booting...
+[2019-11-24 18:31:14.695754] Checking required folders...
+[2019-11-24 18:31:14.696015] [EXEC] Execute code before kernel: False
+[2019-11-24 18:31:14.696104] All main boot functions has ran successfully at: 2019-11-24 18:31:14.696053
+[2019-11-24 18:31:14.696206] Booting completed in: 0.00046753883361816406 sec. Initializing kernel...
+[2019-11-24 18:31:14.696530] [FATAL] Kernel initializing failed: the 'package' argument is required to perform a relative import for './system/kernel.py'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'./{settings["kern_main"]}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for './system/kernel.py'
+
+[2019-11-24 18:32:30.012134] Booting...
+[2019-11-24 18:32:30.012233] Checking required folders...
+[2019-11-24 18:32:30.012473] [EXEC] Execute code before kernel: False
+[2019-11-24 18:32:30.012550] All main boot functions has ran successfully at: 2019-11-24 18:32:30.012511
+[2019-11-24 18:32:30.012628] Booting completed in: 0.0005323886871337891 sec. Initializing kernel...
+[2019-11-24 18:32:30.012995] [FATAL] Kernel initializing failed: the 'package' argument is required to perform a relative import for './system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'./{".".join(settings["kern_main"].split(".")[:-1])}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for './system/kernel'
+
+[2019-11-24 18:38:16.027985] Booting...
+[2019-11-24 18:38:16.028107] Checking required folders...
+[2019-11-24 18:38:16.028360] [EXEC] Execute code before kernel: False
+[2019-11-24 18:38:16.028437] All main boot functions has ran successfully at: 2019-11-24 18:38:16.028386
+[2019-11-24 18:38:16.028515] Booting completed in: 0.0005066394805908203 sec. Initializing kernel...
+[2019-11-24 18:38:16.029092] [FATAL] Kernel initializing failed: No module named '/system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'/{".".join(settings["kern_main"].split(".")[:-1])}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named '/system/kernel'
+
+[2019-11-24 18:38:23.933150] Booting...
+[2019-11-24 18:38:23.933225] Checking required folders...
+[2019-11-24 18:38:23.933451] [EXEC] Execute code before kernel: False
+[2019-11-24 18:38:23.933509] All main boot functions has ran successfully at: 2019-11-24 18:38:23.933477
+[2019-11-24 18:38:23.933569] Booting completed in: 0.0004303455352783203 sec. Initializing kernel...
+[2019-11-24 18:38:23.934178] [FATAL] Kernel initializing failed: No module named 'system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'{".".join(settings["kern_main"].split(".")[:-1])}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'system/kernel'
+
+[2019-11-24 18:38:29.858890] Booting...
+[2019-11-24 18:38:29.858995] Checking required folders...
+[2019-11-24 18:38:29.859247] [EXEC] Execute code before kernel: False
+[2019-11-24 18:38:29.859313] All main boot functions has ran successfully at: 2019-11-24 18:38:29.859276
+[2019-11-24 18:38:29.859381] Booting completed in: 0.0004982948303222656 sec. Initializing kernel...
+[2019-11-24 18:38:29.859740] [FATAL] Kernel initializing failed: the 'package' argument is required to perform a relative import for './system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 205, in <module>
+    kernel = importlib.import_module(f'./{".".join(settings["kern_main"].split(".")[:-1])}')
+  File "/usr/lib/python3.6/importlib/__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for './system/kernel'
+

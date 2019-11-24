@@ -1,0 +1,1 @@
+[{"kern_version": "UNKNOWN", "kern_main": "system/kernel.py", "shells": [["apollo.shell", {"name": ["name", "apollo shell, testing"], "main": ["main", "system/kernel.py"], "description": ["description", "fuck you, babe"]}]], "auto_choose": false, "pre_load_exec": null}]
