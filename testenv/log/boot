@@ -1,0 +1,53 @@
+[2019-11-27 15:58:21.032790] Booting...
+[2019-11-27 15:58:21.032903] Checking required folders...
+[2019-11-27 15:58:21.033166] [EXEC] Execute code before kernel: False
+[2019-11-27 15:58:21.033260] All main boot functions has ran successfully at: 2019-11-27 15:58:21.033195
+[2019-11-27 15:58:21.033356] Booting completed in: 0.0005190372467041016 sec. Initializing kernel...
+[2019-11-27 15:58:21.033437] /home/floordiv/py/flesh_kernel/testenv/system/kernel.py
+[2019-11-27 15:58:21.033441] False
+[2019-11-27 15:58:21.034081] [FATAL] Kernel initializing failed: No module named '/home/floordiv/py/flesh_kernel/testenv/system/kernel'. More info:
+Traceback (most recent call last):
+  File "boot.py", line 212, in <module>
+    kernel = importlib.import_module(os.path.abspath(f'./{kern_main}'))
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 941, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named '/home/floordiv/py/flesh_kernel/testenv/system/kernel'
+
+[2019-11-27 19:27:01.765587] Booting...
+[2019-11-27 19:27:01.765702] Checking required folders...
+[2019-11-27 19:27:01.766016] [EXEC] Execute code before kernel: False
+[2019-11-27 19:27:01.766082] All main boot functions has ran successfully at: 2019-11-27 19:27:01.766046
+[2019-11-27 19:27:01.766145] Booting completed in: 0.0005977153778076172 sec. Initializing kernel...
+[2019-11-27 19:27:01.766949] [FATAL] Kernel initializing failed: No module named 'system.kernel.py'; 'system.kernel' is not a package. More info:
+Traceback (most recent call last):
+  File "boot.py", line 210, in <module>
+    kernel = importlib.import_module(kern_main)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 950, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'system.kernel.py'; 'system.kernel' is not a package
+
+[2019-11-27 19:27:35.488722] Booting...
+[2019-11-27 19:27:35.488820] Checking required folders...
+[2019-11-27 19:27:35.489058] [EXEC] Execute code before kernel: False
+[2019-11-27 19:27:35.489137] All main boot functions has ran successfully at: 2019-11-27 19:27:35.489094
+[2019-11-27 19:27:35.489219] Booting completed in: 0.00048089027404785156 sec. Initializing kernel...
+[2019-11-27 19:31:08.762531] Booting...
+[2019-11-27 19:31:08.762617] Checking required folders...
+[2019-11-27 19:31:08.762837] [EXEC] Execute code before kernel: False
+[2019-11-27 19:31:08.762913] All main boot functions has ran successfully at: 2019-11-27 19:31:08.762864
+[2019-11-27 19:31:08.763005] Booting completed in: 0.0004506111145019531 sec. Initializing kernel...
+[2019-11-27 19:31:10.917287] Booting...
+[2019-11-27 19:31:10.917392] Checking required folders...
+[2019-11-27 19:31:10.917636] [EXEC] Execute code before kernel: False
+[2019-11-27 19:31:10.917732] All main boot functions has ran successfully at: 2019-11-27 19:31:10.917670
+[2019-11-27 19:31:10.917829] Booting completed in: 0.0004916191101074219 sec. Initializing kernel...
