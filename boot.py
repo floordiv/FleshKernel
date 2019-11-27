@@ -5,6 +5,7 @@ import datetime
 import importlib.util
 import traceback
 
+VERSION = '0.0.1'
 start = time.time()
 start_time = datetime.datetime.now()
 
