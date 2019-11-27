@@ -2,7 +2,6 @@ import time
 import os
 import json
 import datetime
-import importlib
 import importlib.util
 import traceback
 
@@ -27,16 +26,19 @@ def check_config():
             result = False
     else:
         result = False
-    return result  # if it returns None, it have to be some unusual situation
+    return result
 
 
-def log(text):
+def log(*text):
+    text = list(text)
+    # text = '\n'.join(text)
     if 'log' not in os.listdir('.'):
         os.mkdir('log')
     if 'boot' not in os.listdir('./log'):
         open('./log/boot', 'w').close()     # create log file
     with open('./log/boot', 'a') as log_file:
-        log_file.write(f'[{datetime.datetime.now()}] {text}\n')
+        for each in text:
+            log_file.write(f'[{datetime.datetime.now()}] {str(each)}\n')
 
 
 def check_filesystem():
@@ -203,10 +205,8 @@ print(f'[BOOT] Booting completed in: {finish - start} sec. Initializing kernel..
 log(f'Booting completed in: {finish - start} sec. Initializing kernel...')
 # run kernel init here
 try:
-    # kern_main = ".".join(settings["kern_main"].split(".")[:-1])   # without .py ending
-    kern_main = settings['kern_main']                               # with .py ending
-
-    kernel = importlib.import_module(f'./{kern_main}')
+    kern_main = '.'.join(settings['kern_main'].split('.')[:-1]).replace('/', '.')
+    kernel = importlib.import_module(kern_main)
     kernel.init()
 except Exception as initializing_kernel_exception:
     print(f'[BOOT-FATAL] Kernel initializing failed: {initializing_kernel_exception}. More info:\n\n{traceback.format_exc()}')
