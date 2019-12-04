@@ -239,13 +239,14 @@ def __variables_from_line(line):
     return variable_name, variable_content
 
 
-def __get_functions_calls(splitted_line):
+def __get_functions_calls_with_spaces(splitted_line):
     characters = list('qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890_')
     functions = {}
     temp = []
     function_arguments = False
     for index, each in enumerate(splitted_line):
         # last_character = splitted_line[index - 1] in characters
+        print(each)
         if '(' in each and not function_arguments and splitted_line[index + 1] == ')':
             func_name = temp
             functions[func_name] = None
@@ -273,11 +274,54 @@ def __get_functions_calls(splitted_line):
     return functions
 
 
-# print(__replace_braces('world, var = (hello), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"')[0])
+def __get_functions_calls(splitted_line):
+    functions = __get_functions_calls_with_spaces(splitted_line)
+    for each in functions:
+        for index, element in enumerate(functions[each]):
+            if element.startswith(' '):
+                element = element[1:]
+            if element.endswith(' '):
+                element = element[:-1]
+            functions[each][index] = element
+    for each in functions:
+        isline = False
+        temp = ''
+        start_index = 0
+        for index, element in enumerate(functions[each]):
+            if element.startswith('"') and not isline:
+                isline = True
+                start_index = index
+                temp += element[1:] + ', '
+            if element.endswith('"') and isline:
+                isline = False
+                if element == '"':
+                    break
+                print(True, functions[each][start_index:index + 1])
+                functions[each][start_index] = ', '.join(functions[each][start_index:index + 1])[1:-1]
+                del functions[each][start_index + 1:index + 1]
+                temp = ''
+            if isline:
+                temp += ', ' + element
+
+    try:
+        for each in functions:
+            old_each = each
+            if each.startswith(' '):
+                each = each[1:]
+            if each.endswith(' '):
+                each = each[:-1]
+            functions[each] = functions[old_each]
+            del functions[old_each]
+    except RuntimeError:
+        pass
+    return functions
+
+
+# print(__replace_braces('world, var = (hello, lol), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"')[0])
 # print('\n\n')
 # print(__variables_from_line('world, var = (hello), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"'))
 # print(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"'))
-# print(__get_functions_calls(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"')[1]))
-# print(__get_functions_calls('hello, world(hi, world)'.split(',')))
+print(__get_functions_calls('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"'))
+# print(__get_functions_calls('hello, world(hi, world), teest(me, and, "ypu, as, a, bitch")'.split(',')))
 # print(__variables_from_line('var = test, "hello, worlder"'))
 
