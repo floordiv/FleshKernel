@@ -1,6 +1,8 @@
 import sys
+
 sys.path.insert(0, '../modules')
-import config
+import cfg
+
 # from ..modules.config import get_var
 
 
@@ -17,11 +19,22 @@ class screen:
 
 
 def update_settings():
-    pass
+    settings = cfg.json_content('screen_driver', allow_multiple_dicts=False, from_config=True)  # backward compatibility
+    return settings
 
 
 def update():
     pass
+
+
+def printtext(*text):
+    pass
+
+
+def printerr(*err):
+    header = err[0]
+    errcode = err[1]
+    errtext = err[2]
 
 
 def init():

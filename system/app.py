@@ -1,12 +1,13 @@
-import modules.config as config
+import cfg
 import importlib.util
 
 
 def run(path):
     path = '../' + path[1:] if path.startswith('/') else path
-    bad_functions = config.get_var('app', 'deny_functions', 'list_of_functions').split()
-    bad_libs = config.get_var('app', 'deny_modules', 'list_of_modules').split()
-    bad_calls = config.get_var('app', 'deny_calls', 'list_of_calls').split()
+    # bad_functions = config.get_var('app', 'deny_functions', 'list_of_functions').split()
+    bad_functions = cfg.json_content('sandbox')['deny_functions']
+    # bad_libs = config.get_var('app', 'deny_modules', 'list_of_modules').split()
+    bad_libs = cfg.json_content('sandbox')['deny_modules']
     source_vars = {}
     source_to_run = ''
     try:
@@ -246,7 +247,6 @@ def __get_functions_calls_with_spaces(splitted_line):
     function_arguments = False
     for index, each in enumerate(splitted_line):
         # last_character = splitted_line[index - 1] in characters
-        print(each)
         if '(' in each and not function_arguments and splitted_line[index + 1] == ')':
             func_name = temp
             functions[func_name] = None
@@ -296,7 +296,6 @@ def __get_functions_calls(splitted_line):
                 isline = False
                 if element == '"':
                     break
-                print(True, functions[each][start_index:index + 1])
                 functions[each][start_index] = ', '.join(functions[each][start_index:index + 1])[1:-1]
                 del functions[each][start_index + 1:index + 1]
                 temp = ''
@@ -321,7 +320,7 @@ def __get_functions_calls(splitted_line):
 # print('\n\n')
 # print(__variables_from_line('world, var = (hello), ((get_lines())), (go_fuck(some_arg1, some_arg2, a, b)), "worlder, yes"'))
 # print(__variables_from_line('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"'))
-print(__get_functions_calls('world, var = hello, get_lines(), go_fuck(some_arg1, some_arg2, a, b), "worlder, yes"'))
-# print(__get_functions_calls('hello, world(hi, world), teest(me, and, "ypu, as, a, bitch")'.split(',')))
+# print(__get_functions_calls('world = go_fuck(some_arg1, some_arg2, a, b))'.split(',')))
+# print(__get_functions_calls('hello = world_me(hi, world), teest(me, and, "ypu, as, a, bitch")'.split(',')))
 # print(__variables_from_line('var = test, "hello, worlder"'))
 

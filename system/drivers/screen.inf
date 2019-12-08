@@ -1,0 +1,6 @@
+driver_type = 'screen-driver'
+driver_system_name = 'default-screen-driver'
+driver_name = 'Default screen driver'
+driver_version = '0.0.1'
+driver_author = '@floordiv'
+driver_description = 'Default screen driver, proprietary software, made by kernel author, @floordiv'
